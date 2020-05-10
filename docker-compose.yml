@@ -2,14 +2,23 @@ version: "3.4"
 services:
   app:
     image: php:alpine
+    container_name: app
+    restart: unless-stopped
+    tty: true
     volumes:
       - "./:/app"
     working_dir: /app
     command: "php artisan serve --host=0.0.0.0 --port=8000"
     ports:
       - 8000:8000
+    build:
+      context: docker/php
+      dockerfile: dev.Dockerfile
   db:
     image: mariadb
+    container_name: db
+    restart: unless-stopped
+    tty: true
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: 1
       MYSQL_DATABASE: ${DB_DATABASE}
