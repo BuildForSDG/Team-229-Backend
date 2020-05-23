@@ -53,7 +53,7 @@ class Example extends React.Component{
             Axios.post("http://localhost:8000/api", {email:this.state.email,fname:this.state.name,gender:this.state.gender})
             .then((res) => {
                 this.getAll();
-            })
+            });
         }else {
             Axios.put("http://localhost:8000/api/${id}", {email:this.state.email,fname:this.state.name,gender:this.state.gender})
             .then((res) => {
