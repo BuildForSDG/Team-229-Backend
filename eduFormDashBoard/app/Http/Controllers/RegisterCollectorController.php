@@ -18,7 +18,8 @@ class RegisterCollectorController extends Controller
         
     }
     public function put(Request $request, $controller_id){
-        $controllers = RegisterController::find($controller_id);
+        $controller = new RegisterController();
+        $controllers = $controller::find($controller_id);
         $controllers->fname = $request->input('fname');
         $controllers->lname = $request->input('lname');
         $controllers->contact = $request->input('contact');

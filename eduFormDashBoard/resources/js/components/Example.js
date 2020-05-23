@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import Axios from 'axios';
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import Axios from "axios";
 
 class Example extends React.Component{
 
@@ -21,11 +21,11 @@ class Example extends React.Component{
 
     getAll(){
         Axios.get("http://localhost:8000/api")
-        .then((res)=> {
+        .then((res) => {
             this.setState({
                 posts:res.data
             });
-        })
+        });
     }
     getOne(collector){
         this.setState({
@@ -37,7 +37,7 @@ class Example extends React.Component{
     }
     deleteCollector(id){
         Axios.delete("http://localhost:8000/api/${id}")
-        .then((res)=> {
+        .then((res) => {
             this.getAll();
         })
     }
@@ -51,12 +51,12 @@ class Example extends React.Component{
         event.preventDefault();
         if(this.state.id === 0){
             Axios.post("http://localhost:8000/api", {email:this.state.email,fname:this.state.name,gender:this.state.gender})
-            .then((res)=> {
+            .then((res) => {
                 this.getAll();
             })
         }else {
             Axios.put("http://localhost:8000/api/${id}", {email:this.state.email,fname:this.state.name,gender:this.state.gender})
-            .then((res)=> {
+            .then((res) => {
                 this.getAll();
             })
 
@@ -174,7 +174,7 @@ class Example extends React.Component{
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {this.state.collectors.map[collector =>
+                                    {this.state.collectors.map[(collector) =>
                                     <tr key={collector.id}>
                                     <td>{collector.fname}</td>
                                     <td>{collector.email}</td>
