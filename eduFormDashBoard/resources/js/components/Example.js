@@ -33,7 +33,7 @@ class Example extends React.Component{
             fname:collector.fname,
             email:collector.email,
             gender:collector.gender
-        })
+        });
     }
     deleteCollector(id){
         Axios.delete("http://localhost:8000/api/${id}")

@@ -11,9 +11,10 @@ class CreateCollectorsTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up_collector()
     {
-        Schema::create('collectors', function (Blueprint $table) {
+        $schema = new Schema();
+        $schema ::create('collectors', function (Blueprint $table) {
             $table->id();
             $table->string('fname');
             $table->string('lname');
@@ -34,6 +35,7 @@ class CreateCollectorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('collectors');
+        $schema = new Schema();
+        $schema::dropIfExists('collectors');
     }
 }
