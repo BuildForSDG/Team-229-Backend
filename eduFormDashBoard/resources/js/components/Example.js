@@ -39,7 +39,7 @@ class Example extends React.Component{
         Axios.delete("http://localhost:8000/api/${id}")
         .then((res) => {
             this.getAll();
-        })
+        });
     }
     // updateCollector(e,id){
     //     Axios.put('http://localhost:8000/api/${id}')
@@ -58,7 +58,7 @@ class Example extends React.Component{
             Axios.put("http://localhost:8000/api/${id}", {email:this.state.email,fname:this.state.name,gender:this.state.gender})
             .then((res) => {
                 this.getAll();
-            })
+            });
 
         }
     }
@@ -66,19 +66,19 @@ class Example extends React.Component{
     namechange(event){
         this.setState({
             name:event.target.value
-        })
+        });
     }
 
     emailchange(event){
         this.setState({
             email:event.target.value
-        })
+        });
     }
 
     genderchange(event){
         this.setState({
             gender:event.target.value
-        })
+        });
     }
 
     render (){
