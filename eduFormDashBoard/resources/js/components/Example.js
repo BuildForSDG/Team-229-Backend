@@ -8,11 +8,11 @@ class Example extends React.Component{
         super(props);
         this.state={
             id: 0,
-            name: '',
-            email: '',
-            gender: '',
+            name: "",
+            email: "",
+            gender: "",
             collectors: []
-        }
+        };
     }
 
     componentDidMount(){
@@ -20,11 +20,11 @@ class Example extends React.Component{
     }
 
     getAll(){
-        Axios.get('http://localhost:8000/api')
-        .then((res)=>{
+        Axios.get("http://localhost:8000/api")
+        .then((res)=> {
             this.setState({
                 posts:res.data
-            })
+            });
         })
     }
     getOne(collector){
@@ -36,8 +36,8 @@ class Example extends React.Component{
         })
     }
     deleteCollector(id){
-        Axios.delete('http://localhost:8000/api/${id}')
-        .then((res)=>{
+        Axios.delete("http://localhost:8000/api/${id}")
+        .then((res)=> {
             this.getAll();
         })
     }
@@ -49,14 +49,14 @@ class Example extends React.Component{
     // }
     submit(event,id){
         event.preventDefault();
-        if(this.state.id == 0){
-            Axios.post('http://localhost:8000/api', {email:this.state.email,fname:this.state.name,gender:this.state.gender})
-            .then((res)=>{
+        if(this.state.id === 0){
+            Axios.post("http://localhost:8000/api", {email:this.state.email,fname:this.state.name,gender:this.state.gender})
+            .then((res)=> {
                 this.getAll();
             })
         }else {
-            Axios.put('http://localhost:8000/api/${id}', {email:this.state.email,fname:this.state.name,gender:this.state.gender})
-            .then((res)=>{
+            Axios.put("http://localhost:8000/api/${id}", {email:this.state.email,fname:this.state.name,gender:this.state.gender})
+            .then((res)=> {
                 this.getAll();
             })
 
@@ -158,7 +158,11 @@ class Example extends React.Component{
                             <table className="highlight responsive-table">
                                 <thead>
                                     <tr className="#fb8c00 orange darken-1">
-                                        <td className="flow-text center" colSpan="6">Current Data Collectors</td>
+                                        <td className="flow-text center" colSpan="6">
+                                            <span className="material-icons">
+                                                library_books
+                                            </span> Current Data Collectors
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>#</td>
@@ -170,16 +174,16 @@ class Example extends React.Component{
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {this.state.collectors.map[collector=>
+                                    {this.state.collectors.map[collector =>
                                     <tr key={collector.id}>
                                     <td>{collector.fname}</td>
                                     <td>{collector.email}</td>
                                     <td>{collector.gender}</td>
                                     <td>
-                                        <button onClick={(e)=>this.getOne(collector)} className="waves-effect waves-light btn" href="#">Edit</button>
+                                        <button onClick={(e) => this.getOne(collector)} className="waves-effect waves-light btn" href="#">Edit</button>
                                     </td>
                                     <td>
-                                        <button onClick={(e)=>this.deleteCollector(collector.id)}  className="waves-effect waves-light btn" href="#">Delete</button>
+                                        <button onClick={(e) => this.deleteCollector(collector.id)}  className="waves-effect waves-light btn" href="#">Delete</button>
                                     </td>
                                     </tr>
                                     ]}
@@ -195,6 +199,6 @@ class Example extends React.Component{
 }
 export default Example;
 
-if (document.getElementById('example')) {
-    ReactDOM.render(<Example />, document.getElementById('example'));
+if (document.getElementById("example")) {
+    ReactDOM.render(<Example />, document.getElementById("example"));
 }

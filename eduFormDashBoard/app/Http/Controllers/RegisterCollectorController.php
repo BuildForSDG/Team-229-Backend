@@ -9,14 +9,16 @@ class RegisterCollectorController extends Controller
 {
     // Collector controller
     public function get(){
-        return response()->json(RegisterController::get());
+        $controllers = new RegisterController();
+        return response()->json($controllers::get());
     }
-    public function delete($id){
-        return response()->json(RegisterController::destroy($id));
+    public function delete($controller_id){
+        $controllers = new RegisterController();
+        return response()->json($controllers::destroy($controller_id));
         
     }
-    public function put(Request $request, $id){
-        $controllers = RegisterController::find($id);
+    public function put(Request $request, $controller_id){
+        $controllers = RegisterController::find($controller_id);
         $controllers->fname = $request->input('fname');
         $controllers->lname = $request->input('lname');
         $controllers->contact = $request->input('contact');

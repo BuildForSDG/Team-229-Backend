@@ -65856,9 +65856,9 @@ var Example = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this, props);
     _this.state = {
       id: 0,
-      name: '',
-      email: '',
-      gender: '',
+      name: "",
+      email: "",
+      gender: "",
       collectors: []
     };
     return _this;
@@ -65874,7 +65874,7 @@ var Example = /*#__PURE__*/function (_React$Component) {
     value: function getAll() {
       var _this2 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('http://localhost:8000/api').then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("http://localhost:8000/api").then(function (res) {
         _this2.setState({
           posts: res.data
         });
@@ -65895,7 +65895,7 @@ var Example = /*#__PURE__*/function (_React$Component) {
     value: function deleteCollector(id) {
       var _this3 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a["delete"]('http://localhost:8000/api/${id}').then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a["delete"]("http://localhost:8000/api/${id}").then(function (res) {
         _this3.getAll();
       });
     } // updateCollector(e,id){
@@ -65912,8 +65912,8 @@ var Example = /*#__PURE__*/function (_React$Component) {
 
       event.preventDefault();
 
-      if (this.state.id == 0) {
-        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('http://localhost:8000/api', {
+      if (this.state.id === 0) {
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post("http://localhost:8000/api", {
           email: this.state.email,
           fname: this.state.name,
           gender: this.state.gender
@@ -65921,7 +65921,7 @@ var Example = /*#__PURE__*/function (_React$Component) {
           _this4.getAll();
         });
       } else {
-        axios__WEBPACK_IMPORTED_MODULE_2___default.a.put('http://localhost:8000/api/${id}', {
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.put("http://localhost:8000/api/${id}", {
           email: this.state.email,
           fname: this.state.name,
           gender: this.state.gender
@@ -66026,7 +66026,9 @@ var Example = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "flow-text center",
         colSpan: "6"
-      }, "Current Data Collectors")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "Email"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "Gender"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "Delete"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, this.state.collectors.map[function (collector) {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "material-icons"
+      }, "library_books"), " Current Data Collectors")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "Email"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "Gender"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "Delete"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, this.state.collectors.map[function (collector) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
           key: collector.id
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, collector.fname), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, collector.email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, collector.gender), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -66051,8 +66053,8 @@ var Example = /*#__PURE__*/function (_React$Component) {
 
 /* harmony default export */ __webpack_exports__["default"] = (Example);
 
-if (document.getElementById('example')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Example, null), document.getElementById('example'));
+if (document.getElementById("example")) {
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Example, null), document.getElementById("example"));
 }
 
 /***/ }),
