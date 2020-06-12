@@ -32,8 +32,9 @@ class JWTAuthentication
                 'error' => 'An error while decoding token.'
             ], 400);
         }
-
-        $user = User::find($credentials->sub);
+        // Recplace with  $user = User::find($credentials->sub); if fails
+        $user_ = new User();
+        $user = $user_->find($credentials->sub);
 
         // Now let's put the user in the request class so that you can grab it from there
         $request->auth = $user;
