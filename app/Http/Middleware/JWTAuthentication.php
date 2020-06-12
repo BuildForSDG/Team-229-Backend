@@ -12,6 +12,7 @@ class JWTAuthentication
 {
     public function handle($request, Closure $next, $guard = null)
     {
+        $guard = [];
         $token = $request->bearerToken();;
 
         if(!$token) {
@@ -22,7 +23,8 @@ class JWTAuthentication
         }
 
         try {
-            $credentials = JWT::decode($token, env('JWT_SECRET'), ['HS256']);
+            $credentials = new JWT();
+            $credentials = $request->decode($token, env('JWT_SECRET'), ['HS256']);
         } catch(ExpiredException $e) {
             return response()->json([
                 'error' => 'Provided token is expired.'
