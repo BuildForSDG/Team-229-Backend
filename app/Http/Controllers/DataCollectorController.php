@@ -152,12 +152,8 @@ class DataCollectorController extends Controller
         $dataCollector = new DataCollector();
         $dataCollector = $request->find($_id);
         $dataCollector->delete();
-        if($dataCollector){
+        if($dataCollector)
             $message = ["message"=>"Collector has been deleted"];
             return response()->json($message);
-        }else{
-            $message = ["message"=>"Failed to delete data"];
-            return response()->json($message);
-        }
     }
 }

@@ -37,26 +37,18 @@ class QuestionController extends Controller
                 $data= $question->find($_id);
                 $data = $request->all();    
                 $data->save();
-                if($data){
+                if($data)
                     $message = ["message"=>"Updated successfully"];
                     return response()->json($message);
-                }else{
-                    $message = ["message"=>"Failed to update data"];
-                    return response()->json($message);
-                }
             }
 
             public function destroyQuestion(Request $request, $_id)
             {
                 $question = new Question();
-                $dataCollector = $request->find($_id);
-                $dataCollector->delete();
-                if($dataCollector){
+                $question = $request->find($_id);
+                $question->delete();
+                if($question)
                     $message = ["message"=>"Question has been deleted"];
                     return response()->json($message);
-                }else{
-                    $message = ["message"=>"Failed to delete data"];
-                    return response()->json($message);
-                }
             }
 }
