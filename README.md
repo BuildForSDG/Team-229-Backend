@@ -7,7 +7,11 @@ The application backend is built using [Laravel 6.2](https://laravel.com/docs/6.
     return $request->user();
 });//github.com/jenssegers/laravel-mongodb) that adds functionalities to the Eloquent model and Query builder for MongoDB, using the original Laravel API. This library extends the original Laravel classes, so it uses exactly the same methods.
 
-Installation
+nt= $getAll->all();
+        return $participant;
+    }
+
+    pInstallation
 ------------
 
 To run this project you must have php 7.2 or higher installed on your machine.

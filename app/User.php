@@ -2,6 +2,7 @@
 
 namespace App;
 
+<<<<<<< HEAD
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -9,6 +10,22 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
+=======
+namespace App;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Foundation\Auth\Access\Authorizable;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+class User extends \Jenssegers\Mongodb\Eloquent\Model implements
+AuthenticatableContract,
+AuthorizableContract,
+CanResetPasswordContract
+{
+    use Authenticatable, Authorizable, CanResetPassword, Notifiable;
+>>>>>>> 38b808b7b0317c362e4d55026a29dda2eb5bf0b5
     /**
      * The attributes that are mass assignable.
      *
