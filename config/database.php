@@ -50,7 +50,16 @@ return [
             'database' => env('DB_DATABASE'),
             'username' => env('DB_USERNAME'),
             'password' => env('DB_PASSWORD'),
+<<<<<<< HEAD
             'options'  => []
+=======
+<<<<<<< HEAD
+            'options'  => []
+=======
+            'options'  => [],
+            'dsn'      => env('DB_DSN'),
+>>>>>>> 38b808b7b0317c362e4d55026a29dda2eb5bf0b5
+>>>>>>> 849593a30e27067ad6cf249ca2a21b28e7d6127b
         ],
 
         'mysql' => [
