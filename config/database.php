@@ -51,7 +51,7 @@ return [
             'username' => env('DB_USERNAME'),
             'password' => env('DB_PASSWORD'),
             'options'  => [],
-            'dsn'      => env('DB_DSN'),
+            'dsn'      => env('DB_DSN'),    
         ],
 
         'mysql' => [

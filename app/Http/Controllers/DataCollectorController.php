@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\RegisterAuthRequest;
+use Firebase\JWT\JWT;
+use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -15,45 +17,79 @@ class DataCollectorController extends Controller
 {
     public $loginAfterSignUp = true;
     
-    // public function register(Request $request)
-    // {
-    //     $dataCollector = DataCollector::create($request->all());
-    //     if($user = DataCollector::where('email', '=', $dataCollector['email'])->first()){
-    //         $dataCollector->save();
-    //     }
-    //     else
-    //         return  response()->json(['error' => 'Email Exists'], 401);
+    public function register(Request $request)
+    {
+        $dataCollector = DataCollector::create($request->all());
+        if($user = DataCollector::where('email', '=', $dataCollector['email'])->first()){
+            $dataCollector->save();
+        }
+        else
+            return  response()->json(['error' => 'Email Exists'], 401);
  
-    //     if ($this->loginAfterSignUp) {
-    //         return $this->login($request);
-    //     }
+        if ($this->loginAfterSignUp) {
+            return $this->login($request);
+        }
  
-    //     return response()->json([
-    //         'success' => true,
-    //         'data' => $dataCollector
-    //     ], Response::HTTP_OK);
-    // }
+        return response()->json([
+            'success' => true,
+            'data' => $dataCollector
+        ], Response::HTTP_OK);
+    }
 
-    // public function login(Request $request)
-    // {
-    //     $credentials = $request->only('email', 'password');
-    //     $token = null;
+    /**
+     * Create a new token.
+     *
+     * @param  \App\User   $user
+     * @return string
+     */
+    protected function jwt(DataCollector $user) {
+        $payload = [
+            'iss' => "lumen-jwt", // Issuer of the token
+            'sub' => $user->id, // Subject of the token
+            'iat' => time(), // Time when JWT was issued.
+            'exp' => time() + 60*60 // Expiration time
+        ];
 
-    //     if ( $user = DataCollector::where('email', '=', $credentials['email'])->first() )
-    //     {
-    //         if (!$user = DataCollector::where('password', '=', $credentials['password'])->first() )
-    //             return [ 'error' => true ];
-    //         else
-    //         {
-    //             $token = JWTAuth::fromUser($user);
+        // As you can see we are passing `JWT_SECRET` as the second parameter that will
+        // be used to decode the token in the future.
+        return JWT::encode($payload, env('JWT_SECRET'));
+    }
 
-    //             return [ 'error' => false, $this->respondWithToken($token) ];
-    //         }
-    //     }
-    //     else
-    //         return  response()->json(['error' => 'Unauthorized'], 401);
 
-    // }
+    public function login(Request $request)
+    {
+        $this->validate($request, 
+        [
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+
+        // Find the user by email
+        $user = DataCollector::where('email', $request->input('email'))->first();
+        //dump($user);
+        if (!$user) {
+            // You wil probably have some sort of helpers or whatever
+            // to make sure that you have the same response format for
+            // differents kind of responses. But let's return the
+                // below respose for now.
+                return response()->json([
+                'error' => 'Email does not exist.'
+            ], 400);
+        }
+        // Verify the password and generate the token
+        if ($request->input('password') == $user->password) {
+            return response()->json([
+                'token' => $this->jwt($user)
+            ], 200);
+        }
+
+        // Bad Request response
+        return response()->json([
+            'error' => 'Email or password is wrong.'
+        ], 400);
+
+    }
+
     protected function respondWithToken($token)
     {
         return response()->json([
@@ -106,8 +142,7 @@ class DataCollectorController extends Controller
      */
     public function guard()
     {
-        $auth = new Auth();
-        return $auth->guard();
+        return Auth::guard();
     }
 
 
@@ -116,31 +151,27 @@ class DataCollectorController extends Controller
         $this->validate($request, [
             'token' => 'required'
         ]);
-        $user = new JWTAuth();
-        $user = $request->authenticate(token);
+        $user = JWTAuth::authenticate($request->token);
  
         return response()->json(['user' => $user]);
     }
 
     public function index()
     {
-        $getData = new DataCollector();
-        $dataCollector=$getData->all();
+        $dataCollector=DataCollector::all();
         return $dataCollector;
     }
 
     public function editCollector(Request $request, $_id)
     {
-        $collector = new DataCollector();
-        $collector = $request->find($_id);
+        $collector = DataCollector::find($_id);
         return $collector;
     }
 
     public function updateCollector(Request $request, $_id)
     {
-        $dataCollector = new DataCollector();
-        $dataCollector= $request->find($_id);
-        $dataCollector = $request->all();     
+        $dataCollector= DataCollector::find($_id);
+        $dataCollector = DataCollector::all();     
         $dataCollector->save();
         if($dataCollector)
             $message = ["message"=>"Updated successfully"];
@@ -148,9 +179,8 @@ class DataCollectorController extends Controller
     }
 
     public function destroyCollector(Request $request, $_id)
-    {
-        $dataCollector = new DataCollector();
-        $dataCollector = $request->find($_id);
+    {   
+        $dataCollector = DataCollector::find($_id);
         $dataCollector->delete();
         if($dataCollector)
             $message = ["message"=>"Collector has been deleted"];

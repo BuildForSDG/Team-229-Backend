@@ -1,22 +1,6 @@
 <?php
 
 namespace App;
-
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 849593a30e27067ad6cf249ca2a21b28e7d6127b
-use Tymon\JWTAuth\Contracts\JWTSubject;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-
-class User extends Authenticatable implements JWTSubject
-{
-    use Notifiable;
-<<<<<<< HEAD
-=======
-=======
-namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -30,8 +14,6 @@ AuthorizableContract,
 CanResetPasswordContract
 {
     use Authenticatable, Authorizable, CanResetPassword, Notifiable;
->>>>>>> 38b808b7b0317c362e4d55026a29dda2eb5bf0b5
->>>>>>> 849593a30e27067ad6cf249ca2a21b28e7d6127b
     /**
      * The attributes that are mass assignable.
      *
