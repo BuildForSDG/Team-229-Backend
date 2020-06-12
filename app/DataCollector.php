@@ -34,10 +34,10 @@ class DataCollector extends Eloquent implements JWTSubject
             'id' => $this->id,
         ];
     }
-    
+
     public function participants()
     {
         return $this->hasMany(Participant::class);
     }
-    
+
 }

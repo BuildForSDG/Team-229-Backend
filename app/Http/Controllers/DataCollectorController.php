@@ -8,13 +8,13 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\RegisterAuthRequest;
+use Firebase\JWT\JWT;
+use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Symfony\Component\HttpFoundation\Response;
 
 class DataCollectorController extends Controller
 {
-    public $loginAfterSignUp = true;
-    
     public function register(Request $request)
     {
         $dataCollector = DataCollector::create($request->all());
@@ -23,52 +23,76 @@ class DataCollectorController extends Controller
         }
         else
             return  response()->json(['error' => 'Email Exists'], 401);
- 
+
         if ($this->loginAfterSignUp) {
             return $this->login($request);
         }
- 
+
         return response()->json([
             'success' => true,
             'data' => $dataCollector
         ], Response::HTTP_OK);
     }
 
+    /**
+     * Create a new token.
+     *
+     * @param  \App\User   $user
+     * @return string
+     */
+    protected function jwt(DataCollector $user) {
+        $payload = [
+            'iss' => "lumen-jwt", // Issuer of the token
+            'sub' => $user->id, // Subject of the token
+            'iat' => time(), // Time when JWT was issued.
+            'exp' => time() + 60*60 // Expiration time
+        ];
+
+        // As you can see we are passing `JWT_SECRET` as the second parameter that will
+        // be used to decode the token in the future.
+        return JWT::encode($payload, env('JWT_SECRET'));
+    }
+
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
-        $token = null;
-
-        if ( $user = DataCollector::where('email', '=', $credentials['email'])->first() )
-        {
-            if (!$user = DataCollector::where('password', '=', $credentials['password'])->first() )
-                return [ 'error' => true ];
-            else
-            {
-                $token = JWTAuth::fromUser($user);
-
-                return [ 'error' => false, $this->respondWithToken($token) ];
-            }
-        }
-        else
-            return  response()->json(['error' => 'Unauthorized'], 401);
-
-    }
-    protected function respondWithToken($token)
-    {
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => $this->guard()->factory()->getTTL() * 60
+        $this->validate($request, [
+            'email'     => 'required|email',
+            'password'  => 'required'
         ]);
+
+        // Find the user by email
+        $user = DataCollector::where('email', $request->input('email'))->first();
+        //dump($user);
+        if (!$user) {
+            // You wil probably have some sort of helpers or whatever
+            // to make sure that you have the same response format for
+            // differents kind of responses. But let's return the
+            // below respose for now.
+            return response()->json([
+                'error' => 'Email does not exist.'
+            ], 400);
+        }
+
+        // Verify the password and generate the token
+        if ($request->input('password') == $user->password) {
+            return response()->json([
+                'token' => $this->jwt($user)
+            ], 200);
+        }
+
+        // Bad Request response
+        return response()->json([
+            'error' => 'Email or password is wrong.'
+        ], 400);
     }
-    
+
+
     public function logout()
     {
         try{
 
             $this->guard()->logout();
-    
+
             return response()->json(['message' => 'Successfully logged out']);
 
         } catch (JWTException $exception) {
@@ -87,8 +111,8 @@ class DataCollectorController extends Controller
     public function me()
     {
         return response()->json($this->guard()->user());
-    } 
-    
+    }
+
     /**
      * Refresh a token.
      *
@@ -115,15 +139,15 @@ class DataCollectorController extends Controller
         $this->validate($request, [
             'token' => 'required'
         ]);
- 
+
         $user = JWTAuth::authenticate($request->token);
- 
+
         return response()->json(['user' => $user]);
     }
 
     public function index()
     {
-        $dataCollector=DataCollector::all();
+        $dataCollector = DataCollector::all();
         return $dataCollector;
     }
 
@@ -136,7 +160,7 @@ class DataCollectorController extends Controller
     public function updateCollector(Request $request, $id)
     {
         $dataCollector= DataCollector::find($id);
-        $dataCollector = DataCollector::create($request->all());     
+        $dataCollector = DataCollector::create($request->all());
         $dataCollector->save();
         if($dataCollector){
             $message = ["message"=>"Updated successfully"];
