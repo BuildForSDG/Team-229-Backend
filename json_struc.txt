@@ -1,0 +1,45 @@
+Sign in 
+Request Method: [POST] | Response: 200 OK
+{
+“username”: ” ”,
+“password”: ” ”
+}
+
+Register Data collector
+Request Method: [POST] | Response: 201 Created    
+{
+“fname”: “ ”,
+“lname”: “ ”,
+“contact”: “ ”,
+“address_one”: “ ”,
+“address_two”: “ ”,
+“email”: “ ”,
+“pass1”: “ ”,
+"Pass2”: “ ”
+“gender”: “ ”
+}
+
+Register Participant
+Request Method: [POST] | Response: 201 Created    
+{
+“fname”: “ ”,
+“lname”: “ ”,
+“contact”: “ ”,
+“address”: “ ”,
+“email”: “ ”,
+“pass1”: “ ”,
+“gender”: “ ”
+}
+
+Questionnaire
+Request Method: [POST] | Response: 200 OK
+
+{
+“question”: “ “,
+    “choice”: {
+        “choice1”: “ ”,
+        “choice2”: “ ”,
+        “choice3”: “ ”,
+        “choice4”: “ ”
+}
+}
